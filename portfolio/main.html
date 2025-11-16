@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexler Glenn Luque Flores - Aspiring Computer Scientist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #020310;
+            --navbar-bg: rgba(3,7,18,0.9);
+            --card-bg: rgba(15,23,42,0.78);
+            --border-neon: rgba(129,140,248,0.7);
+            --text-light: #f5f5ff;
+            --text-muted: #cbd5e1;
+            --gradient-purple: #a855ff;
+            --gradient-cyan: #22c1c3;
+            --gradient-blue: #3f6eff; /* A slightly darker blue for contrast */
+            --github-dark: #0d1117;
+            --github-border: #30363d;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--primary-bg);
+            color: var(--text-light);
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        /* Starry Galaxy Background */
+        .starry-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.30) 1px, transparent 0),
+                radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 150px 150px, 260px 260px;
+            background-position: 0 0, 80px 60px;
+            opacity: 0.16;
+            z-index: -1;
+        }
+
+        /* Fast Cursor Halo */
+        .cursor-halo {
+            position: fixed;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(255,255,255,0.22), rgba(255,255,255,0));
+            mix-blend-mode: screen;
+            opacity: 0.85;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: width 0.1s ease-out, height 0.1s ease-out; /* Smooth resizing */
+        }
+
+        @media (max-width: 768px) {
+            .cursor-halo { display: none; }
+        }
+
+        /* Large soft gradient glows behind sections */
+        .section-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-glow::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 255, 0.2), rgba(34, 193, 195, 0.1), var(--primary-bg) 70%);
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: glow-float 8s infinite alternate ease-in-out;
+            transform: translate(-50%, -50%); /* Center for animation */
+        }
+
+        #home.section-glow::before { top: 0%; left: 70%; }
+        #about.section-glow::before { top: 50%; left: 20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(34, 193, 195, 0.15), rgba(60, 20, 220, 0.1), var(--primary-bg) 70%); animation-delay: 1s; }
+        #achievements.section-glow::before { top: 20%; left: 80%; width: 450px; height: 450px; animation-delay: 2s; }
+        #certificates.section-glow::before { top: 70%; left: 25%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(34, 193, 195, 0.15), rgba(60, 20, 220, 0.1), var(--primary-bg) 70%); animation-delay: 0.5s; }
+        #projects.section-glow::before { top: 30%; left: 75%; width: 400px; height: 400px; animation-delay: 1.5s; }
+        #letters.section-glow::before { top: 60%; left: 10%; width: 550px; height: 550px; background: radial-gradient(circle, rgba(34, 193, 195, 0.15), rgba(60, 20, 220, 0.1), var(--primary-bg) 70%); animation-delay: 2.5s; }
+
+        @keyframes glow-float {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.7; }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* General Section Styling */
+        .section-container {
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .section-heading {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 80px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gradient-purple), var(--gradient-cyan));
+            box-shadow: 0 0 15px rgba(168, 85, 255, 0.6);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: 0.25s ease-out;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-purple), var(--gradient-cyan));
+            color: var(--text-light);
+            box-shadow: 0 0 18px rgba(168,85,255,0.55);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(168,85,255,0.7);
+        }
+
+        .btn-github {
+            background: var(--github-dark);
+            color: var(--text-light);
+            border-color: var(--github-border);
+        }
+
+        .btn-github:hover {
+            border-color: var(--text-light);
+            box-shadow: 0 0 16px rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary-toggle {
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border-color: var(--border-neon);
+            padding: 10px 25px;
+        }
+        .btn-secondary-toggle:hover {
+            color: var(--text-light);
+            border-color: var(--gradient-purple);
+            box-shadow: 0 0 10px rgba(168, 85, 255, 0.3);
+        }
+        .btn-secondary-toggle.active {
+            background: linear-gradient(45deg, var(--gradient-purple) 0%, var(--gradient-blue) 100%);
+            color: var(--text-light);
+            box-shadow: 0 0 20px rgba(168, 85, 255, 0.7);
+            border-color: transparent;
+        }
+
+
+        /* Global Card & Grid Styles */
+        .section-grid {
+            max-width: 1100px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 24px;
+        }
+
+        .neon-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--border-neon);
+            backdrop-filter: blur(14px);
+            padding: 20px;
+            box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .neon-card img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            border-radius: 14px;
+            object-fit: cover;
+        }
+
+        .neon-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .neon-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex-grow: 1; /* Allows text to push buttons to bottom */
+        }
+
+        .neon-card .sub-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: -6px;
+            margin-bottom: 6px;
+        }
+
+        .neon-card .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .neon-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(168,85,255,0.7); /* Changed to degraded purple shadow */
+        }
+
+        .tag-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(129,140,248,0.15);
+            border: 1px solid rgba(129,140,248,0.4);
+            color: #a78bfa;
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.2s ease-out; /* Added transition */
+        }
+        .tag-badge:hover {
+            transform: translateY(-3px) scale(1.05); /* Added animation */
+            box-shadow: 0 4px 12px rgba(168, 85, 255, 0.4);
+            background: rgba(168, 85, 255, 0.25);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            padding: 14px 24px;
+            backdrop-filter: blur(14px);
+            background: var(--navbar-bg);
+            border-bottom: 1px solid rgba(129,140,248,0.6);
+        }
+
+        .nav-inner {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            text-shadow: 0 0 12px rgba(168, 85, 255, 0.8);
+            transition: text-shadow 0.3s ease;
+        }
+        .nav-left:hover {
+            text-shadow: 0 0 20px rgba(168, 85, 255, 1);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 24px;
+            font-size: 0.95rem;
+        }
+
+        .nav-center a {
+            position: relative;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-center a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-purple), var(--gradient-cyan));
+            box-shadow: 0 0 10px rgba(168, 85, 255, 0.6);
+            transition: width 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-center a:hover {
+            color: var(--text-light);
+        }
+
+        .nav-center a:hover::after {
+            width: 100%;
+            box-shadow: 0 0 15px rgba(168, 85, 255, 0.8);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-right svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+            transition: fill 0.3s ease, transform 0.3s ease;
+        }
+        .nav-right a:hover svg {
+            fill: var(--text-light);
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1100px;
+            margin: 100px auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            gap: 48px;
+            align-items: center;
+            min-height: calc(100vh - 180px); /* Adjust height to fit screen better */
+        }
+
+        .hero-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--gradient-purple), var(--gradient-cyan), var(--gradient-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 320px; /* Adjust size */
+            height: 320px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            overflow: hidden;
+            animation: hero-img-float 4s ease-in-out infinite;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image-wrapper::before,
+        .hero-image-wrapper::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .hero-image-wrapper::before { /* Inner neon ring */
+            inset: -6px;
+            border: 2px solid rgba(168, 85, 255, 0.8);
+            box-shadow: 0 0 20px rgba(168, 85, 255, 0.6);
+            z-index: 1; /* Below the image, above outer glow */
+        }
+
+        .hero-image-wrapper::after { /* Outer glow */
+            inset: -20px;
+            background: radial-gradient(circle, rgba(168, 85, 255, 0.3), rgba(34, 193, 195, 0.2), var(--primary-bg) 70%);
+            filter: blur(30px);
+            z-index: 0;
+        }
+
+        .hero-image-wrapper:hover::before {
+            box-shadow: 0 0 30px rgba(168, 85, 255, 0.9);
+            border-color: rgba(34, 193, 195, 0.9);
+        }
+
+        .hero-image-wrapper:hover::after {
+            filter: blur(40px);
+            opacity: 0.9;
+        }
+
+        @keyframes hero-img-float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #a855ff, #3f6eff);
+            color: var(--text-light);
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(168, 85, 255, 0.5);
+            white-space: nowrap;
+            z-index: 3;
+        }
+
+        /* About Section */
+        .about-content {
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--text-muted);
+        }
+
+        .about-skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        /* Achievements Section */
+        .achievements-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .achievements-grid {
+            max-width: 1100px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+        /* Make sure the image in achivement/certificate/project card fits */
+        .achievements-grid .neon-card img { height: 200px; }
+        .certificates .neon-card img { height: 200px; }
+        .projects .neon-card img { height: 200px; }
+        .letters .neon-card img { height: 200px; }
+
+        /* Specific style for gold issuer names in Certificates, achievments and the position from people from letters of recomendation.... */
+        #certificates .neon-card .sub-text,
+        #curricular-grid .neon-card .sub-text,
+        #extracurricular-grid .neon-card .sub-text,
+        #letters .neon-card .sub-text { 
+            color: #FFD700; /* Gold color */
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            background: radial-gradient(circle at center, rgba(168, 85, 255, 0.08) 0%, rgba(34, 193, 195, 0.05) 30%, var(--primary-bg) 70%);
+            background-size: 100% 100%;
+            padding: 60px 20px 20px;
+            border-top: 1px solid rgba(129,140,248,0.3);
+            margin-top: 80px;
+            text-align: center;
+            overflow: hidden; /* Contains potential footer glows */
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            gap: 40px;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--text-light);
+            text-decoration: underline;
+        }
+
+        .footer-connect {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-connect .btn {
+            background: rgba(129,140,248,0.1);
+            border-color: rgba(129,140,248,0.4);
+            color: var(--text-light);
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(129,140,248,0.2);
+        }
+        .footer-connect .btn svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-light);
+        }
+        .footer-connect .btn:hover {
+            background: rgba(129,140,248,0.3);
+            border-color: var(--gradient-purple);
+            box-shadow: 0 0 15px rgba(168,85,255,0.4);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+        
+        /* Animation on scroll (AOS) */
+        [data-aos] {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        will-change: opacity, transform;
+        }
+
+        [data-aos].aos-animate {
+        opacity: 1;
+        transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-image-wrapper {
+                order: -1; /* Move image above text on mobile */
+            }
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-connect {
+                justify-content: center;
+            }
+            .nav-center {
+                display: none; /* Hide nav links on small screens */
+            }
+            .nav-inner {
+                justify-content: space-between; /* push logo left, icons right */
+            }
+            .navbar {
+                padding: 10px 20px;
+            }
+            .nav-left {
+                font-size: 1.1rem;
+            }
+            .section-heading {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .hero-image-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+            .hero-image-wrapper::before { inset: -4px; }
+            .hero-image-wrapper::after { inset: -15px; }
+            .section-heading {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="starry-bg"></div>
+
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="nav-left">VG</div>
+            <nav class="nav-center">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#projects">Projects</a>
+                <a href="#letters">Letters of Recommendation</a>
+            </nav>
+            <div class="nav-right">
+                <a href="mailto:vexler.flores@example.com" aria-label="Email Vexler Glenn Luque Flores">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.003 5.884L12 11.416l9.997-5.532c-.001-.299-.038-.592-.108-.875L12 10.584 2.111 5.009c-.07.283-.107.576-.108.875zM2 7.5L2 19h20V7.5L12 12.75 2 7.5z"/></svg>
+                </a>
+                <a href="https://github.com/vglennlq7" target="_blank" rel="noopener noreferrer" aria-label="Vexler Glenn Luque Flores's GitHub profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero section-glow">
+            <div class="hero-content" data-aos>
+                <h1>Vexler Glenn Luque Flores</h1>
+                <p>Aspiring Computer Science Student</p>
+                <div class="hero-buttons">
+                    <a href="mailto:vexler.flores@example.com" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M2.003 5.884L12 11.416l9.997-5.532c-.001-.299-.038-.592-.108-.875L12 10.584 2.111 5.009c-.07.283-.107.576-.108.875zM2 7.5L2 19h20V7.5L12 12.75 2 7.5z"/></svg>
+                        Email Me
+                    </a>
+                    <a href="https://github.com/vglennlq7" target="_blank" rel="noopener noreferrer" class="btn btn-github">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper" data-aos data-aos-delay="200">
+                <img src="images/FOTODEFINITIVO.jpg" alt="Vexler Glenn Luque Flores Profile Picture, abstract purple/blue tones">
+                
+            </div>
+        </section>
+
+        <section id="about" class="section-container section-glow">
+            <h2 class="section-heading" data-aos>About Me</h2>
+            <p class="about-content" data-aos data-aos-delay="100">
+                I’m Vexler Glenn Luque Flores from Peru, a motivated learner with a strong passion for technology and computer science. I graduated from Trilce Breña High School, where my interest in computers began to grow into a clear academic goal. Today, my dream is to study Computer Science in Russia, a country I deeply admire for its scientific excellence and technological innovation. In the future, I hope to specialize in cybersecurity and contribute to building safer digital environments.
+            </p>
+            <p class="about-content" data-aos data-aos-delay="200">
+                I am actively developing my skills through self-study and online courses. I am currently learning Python, JavaScript, HTML, and CSS, and I am taking a Microsoft JavaScript course to strengthen my web development foundation. I enjoy exploring how software works, building small projects, and constantly challenging myself to improve.
+            </p>
+            <p class="about-content" data-aos data-aos-delay="300">
+                I am committed to growing as a future software engineer and cybersecurity specialist, and I’m excited to continue learning, creating, and working toward my long-term goals.
+            </p>
+            <div class="about-skills" data-aos data-aos-delay="400">
+                <span class="tag-badge">Python</span>
+                <span class="tag-badge">JavaScript</span>
+                <span class="tag-badge">HTML</span>
+                <span class="tag-badge">CSS</span>
+                <span class="tag-badge">Cybersecurity</span>
+                <span class="tag-badge">Computer Science</span>
+                <span class="tag-badge">Algorithms</span>
+            </div>
+        </section>
+
+        <section id="achievements" class="section-container section-glow">
+            <h2 class="section-heading" data-aos>Achievements</h2>
+            <div class="achievements-toggle" data-aos data-aos-delay="100">
+                <button id="curricular-btn" class="btn btn-secondary-toggle active">Curricular Achievements</button>
+                <button id="extracurricular-btn" class="btn btn-secondary-toggle">Extracurricular Achievements</button>
+            </div>
+
+            <div id="curricular-grid" class="achievements-grid">
+                <div class="neon-card" data-aos data-aos-delay="200">
+                    <img src="images/DIPLOMA DE HONOR PRIMER PUESTO EN 5TO AÑO DE PRIMARIA image.jpg" alt="Academic Excellence Award">
+                    <h3>1st Place – Top Student Award (5th Grade)</h3>
+                    <p class="sub-text">I.E. Nº 40687 Felix Rivas González, 2014</p>
+                    <p>Recognized as the highest-performing student in the entire 5th grade, earning first place for exceptional dedication, responsibility, and academic excellence throughout the school year</p>
+                    <div>
+                        <span class="tag-badge">Academics</span>
+                        <span class="tag-badge">Excellence</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1hP1vo2WBFMWy10NOe9sOEMwnbhCgAcls/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/DIPLOMA PRIMER PUESTO 4TO AÑO DE EDUCACION PRIMARIA iamge.jpg" alt="Programming Contest Certificate">
+                    <h3>1st Place – Top Student Award (4th Grade)</h3>
+                    <p class="sub-text">I.E. Nº 40687 Felix Rivas González, 2013</p>
+                    <p>Recognized as the highest-performing student in the entire 4th grade, earning first place for exceptional dedication, responsibility, and academic excellence throughout the school year.</p>
+                    <div>
+                        <span class="tag-badge">Academics</span>
+                        <span class="tag-badge">Excellence</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/11FE5RMJaij5kg1oHtALoNyCc2POrvf02/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="extracurricular-grid" class="achievements-grid" style="display: none;">
+                <div class="neon-card" data-aos data-aos-delay="200">
+                    <img src="images/danza moderna image.jpg" alt="Hackathon Award">
+                    <h3>Modern Dance – Vacaciones Útiles “Amigos de la PNP”</h3>
+                    <p class="sub-text">Región Arequipa PNP – Departamento de Seguridad Ciudadana</p>
+                    <p>Participated in the “Vacaciones Útiles – Amigos de la PNP” program in the Modern Dance discipline, developing rhythm, coordination, and artistic performance skills through structured dance activities.</p>
+                    <div>
+                        <span class="tag-badge">Sports</span>
+                        <span class="tag-badge">Performance</span>
+                        <span class="tag-badge">Artistic Expression</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1ik1ElY0ynTLmw1Y3cTvGSizRqsWFCzu1/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/atletismo image.jpg" alt="Volunteer Certificate">
+                    <h3>Athletics – Vacaciones Útiles “Amigos de la PNP”</h3>
+                    <p class="sub-text">Región Arequipa PNP – Departamento de Seguridad Ciudadana</p>
+                    <p>Participated in the “Vacaciones Útiles – Amigos de la PNP” program in the Athletics discipline, developing coordination, endurance, and physical performance through structured training sessions..</p>
+                    <div>
+                        <span class="tag-badge">Agility</span>
+                        <span class="tag-badge">Sports</span>
+                        <span class="tag-badge">Discipline</span>
+                        <span class="tag-badge">Speed Training</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/12fh_vZ5JzCXW9i_LlYhaYcMG2VzwrS8B/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="400">
+                    <img src="images/swimming imager.jpg" alt="Cybersecurity Competition">
+                    <h3>Swimming Development Program Certificate (2020)</h3>
+                    <p class="sub-text">Peruvian Swimming Sports Federation (FDPN)</p>
+                    <p>Completed the Swimming Development Program, strengthening aquatic skills, physical conditioning, and water safety through structured training sessions during the 2020 summer season.</p>
+                    <div>
+                        <span class="tag-badge">Swim Technique</span>
+                        <span class="tag-badge">Endurance</span>
+                        <span class="tag-badge">Discipline</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1tx4fg3Ic_UZ1wnprDxScGh-4O5GmSksL/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="500">
+                    <img src="images/paint msword.jpg" alt="Club Leadership Role">
+                    <h3>Informatics Workshop – Paint and MS Word</h3>
+                    <p class="sub-text">C.E.O.G.N.E. Rigoberta Menchú</p>
+                    <p>Built essential computer skills by completing the Informatics Workshop, gaining hands-on experience with MS Paint and Microsoft Word.</p>
+                    <div>
+                        <span class="tag-badge">Basic Computer Skills</span>
+                        <span class="tag-badge">MS Word</span>
+                        <span class="tag-badge">Digital Creativity (Paint)</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1r4grlW-C_XACZwpcdgPN6zmoR4kWCQV-/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certificates" class="section-container section-glow">
+            <h2 class="section-heading" data-aos>Certificates</h2>
+            <div class="section-grid">
+                <div class="neon-card" data-aos data-aos-delay="100">
+                    <img src="images/Coursera Introduction to HTML.jpg" alt="Python Programming Certificate">
+                    <h3>Introduction to HTML</h3>
+                    <p class="sub-text">Coursera</p>
+                    <p>Learned the fundamentals of HTML, including basic tags and page structure for simple web pages.</p>
+                    <div>
+                        <span class="tag-badge">HTML</span>
+                        <span class="tag-badge">Web Fundamentals</span>
+                        <span class="tag-badge">Page Layout</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1B_0jAXVSL1xoEFNhijorT__5wGRMZWWj/view" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="200">
+                    <img src="images/Google Artificial intelligence and productivity image.jpg" alt="React Development Certificate">
+                    <h3>Google AI and productivity</h3>
+                    <p class="sub-text">Santander Open Academy</p>
+                    <p>Learned the fundamentals of artificial intelligence, explored practical AI tools like Gemini to boost productivity, and gained skills in creating effective prompts.</p>
+                    <div>
+                        <span class="tag-badge">Google</span>
+                        <span class="tag-badge">AI Tools</span>
+                        <span class="tag-badge">Productivity Skills</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1TW61VNmA-9xfMA3eUM0c1aaeFYSYiiI_/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/Programming for everybody image.jpg" alt="Introduction to Cybersecurity Certificate">
+                    <h3>Programming for everybody</h3>
+                    <p class="sub-text">University of Michigan</p>
+                    <p>introductory Python course covering core programming concepts such as variables, control structures, functions, and loops, with hands-on practice writing simple programs.</p>
+                    <div>
+                        <span class="tag-badge">Programming Fundamentals</span>
+                        <span class="tag-badge">Python</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1Xlcnxj4X7mUs-Y2RTEgcQanJABqfImKb/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="400">
+                    <img src="images/Python Data Structures image.jpg" alt="Data Structures and Algorithms Certificate">
+                    <h3>Python Data Structures</h3>
+                    <p class="sub-text">University of Michigan</p>
+                    <p>Learned core Python data structures, including lists, tuples, dictionaries and file handling.</p>
+                    <div>
+                        <span class="tag-badge">Python programming</span>
+                        <span class="tag-badge">Data Structures</span>
+                        <span class="tag-badge">Data Analysis</span>
+                        <span class="tag-badge">Debugging</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/14bowPk9tceTlvnLde1OF-REjnRqiY3wL/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="500">
+                    <img src="images/Python fundamentals image.jpg" alt="SQL and Databases Certificate">
+                    <h3>Python Fundamentals</h3>
+                    <p class="sub-text">Skill</p>
+                    <p>Completed a beginner-level Python course covering core programming concepts.</p>
+                    <div>
+                        <span class="tag-badge">Python</span>
+                        <span class="tag-badge">Programming Basics</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/10jZyhkZQcKGhTuNTF0CSOwDKShL8EOXZ/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="500">
+                    <img src="images/Python fundamentals October image.jpg" alt="SQL and Databases Certificate">
+                    <h3>Python Fundamentals October</h3>
+                    <p class="sub-text">Skill</p>
+                    <p>Completed a beginner-level Python course covering core programming concepts.</p>
+                    <div>
+                        <span class="tag-badge">Python</span>
+                        <span class="tag-badge">Programming Basics</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1yJEYrA4Gd3BmLUNjOAsiLkmbEIRa9sr9/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="600">
+                    <img src="images/Study Smarter Techniques that Work image.jpg" alt="Cloud Fundamentals Certificate">
+                    <h3>Study Smarter : Techniques that Work</h3>
+                    <p class="sub-text">Santander Open Academy</p>
+                    <p>A practical course on effective study methods and focus techniques.</p>
+                    <div>
+                        <span class="tag-badge">Santander Open Academy</span>
+                        <span class="tag-badge">Study Skills</span>
+                        <span class="tag-badge">Learning Efficiency</span>
+                        <span class="tag-badge">Productivity</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1BeSzpmTBPEYow5b9ZUF3W-ITKNy_ujjV/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="700">
+                    <img src="images/russian a1.jpg" alt="JavaScript Algorithms Certificate">
+                    <h3>Russian Language (A1)</h3>
+                    <p class="sub-text">Russian Center of Science and Culture in Lima</p>
+                    <p>Completed the Russian Language, Elementary Level (A1) course at the Russian Center of Science and Culture in Lima.</p>
+                    <div>
+                        <span class="tag-badge">Russian</span>
+                        <span class="tag-badge">Basic Grammar</span>
+                        <span class="tag-badge">Basic Vocabulary</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1CFrvo4oNaa45vyuqgLR1wTo_fD1PJ0SY/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="800">
+                    <img src="images/english.jpg" alt="Google IT Support Certificate">
+                    <h3>English Intermediate</h3>
+                    <p class="sub-text">ICPNA</p>
+                    <p>Completed succesfully two Intermediate-level English courses (Intermediate 3 and Intermediate 4) at the Instituto Cultural Peruano Norteamericano (ICPNA).</p>
+                    <div>
+                        <span class="tag-badge">Reading & Listening</span>
+                        <span class="tag-badge">Grammar & Vocabulary</span>
+                        <span class="tag-badge">Communication Skills</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1d-eqVBeVt7dHpvkZ7JXGh9pwaNp4ZLTt/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Certificate</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-container section-glow">
+            <h2 class="section-heading" data-aos>Projects</h2>
+            <div class="section-grid">
+                <div class="neon-card" data-aos data-aos-delay="100">
+                    <img src="images/cr7 vs messi project.png"Smart Home Dashboard Screenshot">
+                    <h3>CR7 vs Messi </h3>
+                    <p>I built an interactive website where users answer a series of questions and receive a personalized result identifying their “GOAT” in the Cristiano Ronaldo vs. Lionel Messi debate.</p>
+                    <div>
+                        <span class="tag-badge">HTML</span>
+                        <span class="tag-badge">CSS</span>
+                        <span class="tag-badge">JavaScript</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://vglennlq7.github.io/Cr7vsMessi" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                        <a href="https://github.com/vglennlq7/Cr7vsMessi" target="_blank" rel="noopener noreferrer" class="btn btn-github">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="200">
+                    <img src="images/temperature converter.png" alt="AI Chatbot Screenshot">
+                    <h3>Temperature Converter</h3>
+                    <p>I built and interactive website, that allows the users to convert values between Celsius, Kelvin and Fahrenheit.</p>
+                    <div>
+                        <span class="tag-badge">HTML</span>
+                        <span class="tag-badge">CSS</span>
+                        <span class="tag-badge">JavaScript</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://vglennlq7.github.io/realtime-temp-converter" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                        <a href="https://github.com/vglennlq7/realtime-temp-converter" target="_blank" rel="noopener noreferrer" class="btn btn-github">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/simple calculator.png" alt="Secure File Storage Screenshot">
+                    <h3>A simple Calculator</h3>
+                    <p>I built a simple calculator web that performs basic arithmetic operations, using Python and Streamlit framework.</p>
+                    <div>
+                        <span class="tag-badge">Python</span>
+                        <span class="tag-badge">Streamlit</span>
+                        <span class="tag-badge">Interactive Web App</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://calculator-dfnjrfghzaaq7yxsufot2o.streamlit.app/#simple-calculator" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Live</a>
+                        <a href="https://github.com/vglennlq7/Calculator" target="_blank" rel="noopener noreferrer" class="btn btn-github">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="letters" class="section-container section-glow">
+            <h2 class="section-heading" data-aos>Letters of Recommendation</h2>
+            <div class="section-grid">
+                <div class="neon-card" data-aos data-aos-delay="100">
+                    <img src="images/chemistry image.jpg" alt="Letter of Recommendation thumbnail">
+                    <h3>Mr. Alfredo Escobedo Core</h3>
+                    <p class="sub-text">Chemistry Teacher, Trilce Breña</p>
+                    <p>"Vexler Glenn Luque ha demostrado un compromiso excepcional con sus estudios y una curiosidad innata por el aprendizaje..."</p>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1fgVNNcR9SCwNOCrZXvZy_PMF8iEPbx72/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read Full Letter</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="200">
+                    <img src="images/algebra image.jpg" alt="Letter of Recommendation thumbnail">
+                    <h3>Mr. Miguel Falcón Hidalgo</h3>
+                    <p class="sub-text">Algebra Teacher, Trilce Breña</p>
+                    <p>"Desde el primer día, se destacó en mi clase, no solo por su excelente rendimiento en álgebra, sino también por su curiosidad intelectual, ganas de mejorar..."</p>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/18UA9MrTXBGNn6-xTNLNLOhpVe25wAihr/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read Full Letter</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/history image.jpg" alt="Letter of Recommendation thumbnail">
+                    <h3>Mr. Félix Martín Ríos Céspedes</h3>
+                    <p class="sub-text">History Teacher, Trilce Breña</p>
+                    <p>"Estoy seguro de que aprovechará esta beca para continuar su desarrollo académico y profesional, y que sus experiencias enriquecerán tanto a su comunidad académica como a la sociedad en general..."</p>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/1GcL2vW4TVWnVLO_iA9Uth8Sb4gJlhNOs/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read Full Letter</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/geometry image].jpg" alt="Letter of Recommendation thumbnail">
+                    <h3>Mr. Salomón Sánchez Arce</h3>
+                    <p class="sub-text">Geometry Teacher, Trilce Breña</p>
+                    <p>"...demostro creatividad en la resolución de problemas y entrego trabajos académicos de alta calidad que reflejaban un profundo conocimiento del área de matemática..."</p>
+                    <div class="card-actions">
+                        <a href="https://drive.google.com/file/d/10T0ULN_nRxR1C2RcdvvmyhZmubgTZsHv/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read Full Letter</a>
+                    </div>
+                </div>
+                <div class="neon-card" data-aos data-aos-delay="300">
+                    <img src="images/english image.jpg" alt="Letter of Recommendation thumbnail">
+                    <h3>Ms. María Jesús Flores</h3>
+                    <p class="sub-text">English Teacher, ICPNA</p>
+                    <p>"Durante mi experiencia trabajando con Vexler Glenn Luque, me ha impresionado no solo su habilidad para dominar el idioma inglés, sino también su compromiso con el aprendizaje interdisciplinario. Él tiene una capacidad única para comunicarse..."</p>
+                        <a href="https://drive.google.com/file/d/1MktA5bKQg006JnUIXz1XjXu0VngUShvp/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read Full Letter</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>VexlerLuque</h3>
+                <p>Future Cybersecurity Specialist passionate about computer science, technology and giving my best.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#certificates">Certificates</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#letters">Letters of Recommendation</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <div class="footer-connect">
+                    <a href="https://github.com/vglennlq7" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <span class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.08-.737.082-.721.082-.721 1.2.082 1.834 1.234 1.834 1.234 1.071 1.833 2.81 1.304 3.49.997.107-.775.418-1.304.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.305-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.653 1.653.242 2.871.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.92-.43.369-.814.897-.814 1.815v2.694c0 .319.192.694.8.576 4.765-1.589 8.203-6.085 8.203-11.385 0-6.627-5.373-12-12-12z"/></svg>
+                        </span>
+                    </a>
+                    <a href="mailto:vexler.flores@example.com" aria-label="Email">
+                        <span class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.003 5.884L12 11.416l9.997-5.532c-.001-.299-.038-.592-.108-.875L12 10.584 2.111 5.009c-.07.283-.107.576-.108.875zM2 7.5L2 19h20V7.5L12 12.75 2 7.5z"/></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 Vexler Glenn Luque Flores. Built with love and caffeine.
+        </div>
+    </footer>
+
+    <script>
+        // Cursor Halo
+        const halo = document.createElement("div");
+        halo.className = "cursor-halo";
+        document.body.appendChild(halo);
+
+        document.addEventListener("mousemove", (e) => {
+            halo.style.left = e.clientX + "px";
+            halo.style.top = e.clientY + "px";
+        });
+
+        // Achievements Toggle
+        const curricularBtn = document.getElementById('curricular-btn');
+        const extracurricularBtn = document.getElementById('extracurricular-btn');
+        const curricularGrid = document.getElementById('curricular-grid');
+        const extracurricularGrid = document.getElementById('extracurricular-grid');
+
+        function showCurricular() {
+            curricularGrid.style.display = 'grid';
+            extracurricularGrid.style.display = 'none';
+            curricularBtn.classList.add('active');
+            extracurricularBtn.classList.remove('active');
+        }
+
+        function showExtracurricular() {
+            curricularGrid.style.display = 'none';
+            extracurricularGrid.style.display = 'grid';
+            extracurricularBtn.classList.add('active');
+            curricularBtn.classList.remove('active');
+        }
+
+        curricularBtn.addEventListener('click', showCurricular);
+        extracurricularBtn.addEventListener('click', showExtracurricular);
+
+        // Initially show curricular
+        showCurricular();
+
+        // Smooth Scroll for Navbar links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade-in on Scroll (AOS)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                    // Optional: Unobserve after first animation if elements should not re-animate
+                    // observer.unobserve(entry.target);
+                } else {
+                    // Optional: remove class when out of view, to re-animate on scroll up
+                    // entry.target.classList.remove('aos-animate');
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        document.querySelectorAll('[data-aos]').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
